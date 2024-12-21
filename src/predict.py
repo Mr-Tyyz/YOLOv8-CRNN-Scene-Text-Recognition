@@ -53,8 +53,10 @@ def scene_text_recognition(img_path, yolo_weight, crnn_config):
     
     cropped_texts = extract_texts(results, org_img)
             
-    config = torch.load(crnn_config)
+#    config = torch.load(crnn_config)
+#    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    config = torch.load(crnn_config, map_location=device)    
     
     if cropped_texts:
         detect_dataset = TRDataset(images=cropped_texts, img_height=config['img_height'], img_width=config['img_width'])
